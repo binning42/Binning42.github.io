@@ -1,0 +1,876 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <link rel="icon" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yangyang Hua">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="白嫖和低价ECS的评测 手上目前有有阿里云轻量应用服务器（1C2G5M，CentOS 7.7，学生机），阿里云ECS T5（2C4G1M，CentOS 7.7，高校在家计划送的），华为云弹性云服务器ECS（1C2G1M，Fodera 30，学生机），华为云耀ECS（1C2G1M，CentOS 7.7，牛客网活动白嫖），由于需求和提供的镜像不同，对比其镜像，控制台服务，CPU对比，同带宽网络，硬盘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="白嫖和低价ECS的评测">
+<meta property="og:url" content="https://yyhua.me/2020/031208.html">
+<meta property="og:site_name" content="Binning&#39;s Blog">
+<meta property="og:description" content="白嫖和低价ECS的评测 手上目前有有阿里云轻量应用服务器（1C2G5M，CentOS 7.7，学生机），阿里云ECS T5（2C4G1M，CentOS 7.7，高校在家计划送的），华为云弹性云服务器ECS（1C2G1M，Fodera 30，学生机），华为云耀ECS（1C2G1M，CentOS 7.7，牛客网活动白嫖），由于需求和提供的镜像不同，对比其镜像，控制台服务，CPU对比，同带宽网络，硬盘">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/cloud-sea.jpg">
+<meta property="article:published_time" content="2020-03-12T08:32:03.000Z">
+<meta property="article:modified_time" content="2022-11-10T16:06:11.793Z">
+<meta property="article:author" content="Yangyang Hua">
+<meta property="article:tag" content="Cloud">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/cloud-sea.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>白嫖和低价ECS的评测 ~ Binning&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yyhua.me","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"~","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":5},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Binning&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://yyhua.cn-sh2.ufileos.com/fluid/post/cloud-sea.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="白嫖和低价ECS的评测"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-03-12 16:32" pubdate>
+          Thursday, March 12th 2020, 4:32 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          2.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          18 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">白嫖和低价ECS的评测</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    <!-- compatible with older versions-->
+                    本文最后更新于：November 11, 2022 am
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="白嫖和低价ecs的评测"><a class="markdownIt-Anchor" href="#白嫖和低价ecs的评测"></a> 白嫖和低价ECS的评测</h1>
+<p>手上目前有有阿里云轻量应用服务器（1C2G5M，CentOS 7.7，学生机），阿里云ECS T5（2C4G1M，CentOS 7.7，高校在家计划送的），华为云弹性云服务器ECS（1C2G1M，Fodera 30，学生机），华为云耀ECS（1C2G1M，CentOS 7.7，牛客网活动白嫖），由于需求和提供的镜像不同，对比其镜像，控制台服务，CPU对比，同带宽网络，硬盘的I/O能力。 u1s1，同等配置硬件差距应该不大，主要是服务上吧。（结果是打脸了QAQ）</p>
+<h2 id="镜像"><a class="markdownIt-Anchor" href="#镜像"></a> 镜像</h2>
+<p>云服务器商，提供的镜像如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">服务器 \ 镜像</th>
+<th style="text-align:center">CentOS</th>
+<th style="text-align:center">Debian</th>
+<th style="text-align:center">Ubuntu</th>
+<th style="text-align:center">OpenSUSE</th>
+<th style="text-align:center">FreeBSD</th>
+<th style="text-align:center">Fodera</th>
+<th style="text-align:center">Windows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">阿里轻量应用服务器</td>
+<td style="text-align:center">7.3</td>
+<td style="text-align:center">8.9/9.9</td>
+<td style="text-align:center">16.04/18.04</td>
+<td style="text-align:center">42.3</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">2016数据中心版</td>
+</tr>
+<tr>
+<td style="text-align:center">阿里ECS</td>
+<td style="text-align:center">6.8 - 7.7, 8.0</td>
+<td style="text-align:center">8.9 - 10.3</td>
+<td style="text-align:center">14.04/16.04/18.04</td>
+<td style="text-align:center">15.1/42.3</td>
+<td style="text-align:center">11.2</td>
+<td style="text-align:center">支持RedHat 7.6 - 7.7, 8</td>
+<td style="text-align:center">2008 - 2019</td>
+</tr>
+<tr>
+<td style="text-align:center">华为ECS</td>
+<td style="text-align:center">6.5 - 7.6</td>
+<td style="text-align:center">8.2/8.8/9.0/10.0</td>
+<td style="text-align:center">16.04/18.04</td>
+<td style="text-align:center">15.0</td>
+<td style="text-align:center">11.0</td>
+<td style="text-align:center">30</td>
+<td style="text-align:center">2008 - 2019</td>
+</tr>
+<tr>
+<td style="text-align:center">华为云耀</td>
+<td style="text-align:center">7.2 - 7.6</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">16.04/18.04</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">X</td>
+<td style="text-align:center">2012 - 2019</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>均可更换系统镜像</li>
+<li>阿里均提供Aliyun Linux，阿里ECS提供CoreOS &amp; SUSE Linux；华为ECS提供CoreOS，EulerOS</li>
+</ul>
+<p>华为云耀服务器提供的镜像是最少的，正常使用还是可以，打算折腾的话还是不太够，以及CentOS能够更新到7.7。根据不完全使用体验和群里的吐槽，腾讯的仓库东西版本最落后，阿里和华为CentOS仓库也挺落后的，不是很推荐。</p>
+<h2 id="控制台服务"><a class="markdownIt-Anchor" href="#控制台服务"></a> 控制台服务</h2>
+<p>各家控制台UI都大同小异，阿里轻量应用服务器极度简洁（感觉不好看，但唯一可以控制台添加密钥）；两家ECS服务器区别不大，小机器和单台主机的话过于繁杂；华为云耀的话，感觉不错，简洁，小机器使用体验不错。</p>
+<p>对比图：</p>
+<p><strong>华为云耀</strong>:</p>
+<p><img src="https://i.loli.net/2020/03/12/ZNULM3Gz5mgq9uF.jpg" alt="hwyy1.jpg" /></p>
+<p><strong>华为ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/5pc16KsSmZLQDBo.jpg" alt="hwecs1.jpg" /></p>
+<p><strong>阿里轻量</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/C17YXbjaPN2G5AM.jpg" alt="ali1.jpg" /></p>
+<p><strong>阿里ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/pi9ds6jPZzHOJhU.jpg" alt="aliecs1.jpg" /></p>
+<p>使用体验的话，华为云耀控制台常用的二级菜单，个人感觉更容易找到，阿里的不是很好找。</p>
+<h2 id="cpu对比"><a class="markdownIt-Anchor" href="#cpu对比"></a> CPU对比</h2>
+<p><strong>华为云耀</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/OroiWFAx913y8sI.jpg" alt="hwyy3.jpg" /></p>
+<p><strong>华为ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/ovFBitdODzqbGMc.jpg" alt="hwecs3.jpg" /></p>
+<p><strong>阿里ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/cXVukCjBLl4SrvM.jpg" alt="aliecs3.jpg" /></p>
+<p>使用的U都是Skylake架构，阿里是铂金系列，华为是金牌系列；不过云耀使用的是定制版第二代U，阿里轻量应用服务器U和阿里ECS相同。由于是单核，单从主频上看华为云耀 &gt; 阿里ECS &gt; 华为ECS；不过 云耀步进更大（对于这种小机器，影响并不大）。</p>
+<h2 id="同带宽网络测试"><a class="markdownIt-Anchor" href="#同带宽网络测试"></a> 同带宽网络测试</h2>
+<p>这里就对比测试阿里ECS，华为ECS，华为云耀：</p>
+<h3 id="测试入站"><a class="markdownIt-Anchor" href="#测试入站"></a> 测试入站</h3>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs awk">wget http:<span class="hljs-regexp">//</span>cachefly.cachefly.net/<span class="hljs-number">100</span>mb.test<br></code></pre></td></tr></table></figure>
+<p>华为ECS（9.76 MB/s）最快，华为云耀（6.66 MB/s）其次，阿里ECS（219 KB/s）最弟弟（QAQ 完全被吊打）。看起来华为云并未限制入站带宽（上限应该是100Mbps），阿里云是限制了的。</p>
+<p><strong>华为云耀</strong>:</p>
+<p><img src="https://i.loli.net/2020/03/12/2KfLzN8ChaEmciG.jpg" alt="hwyy2.jpg" /></p>
+<p><strong>华为ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/7MhraxcXtnLGODY.jpg" alt="hwecs2.jpg" /></p>
+<p><strong>阿里ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/bu5BORMi4dWXPlK.jpg" alt="aliecs2.jpg" /></p>
+<h3 id="测试出站"><a class="markdownIt-Anchor" href="#测试出站"></a> 测试出站</h3>
+<p>简洁点，就通过不带参数的scp来测试：</p>
+<p>阿里云ECS（130 KB/s）继续垫底，被吊打。华为云耀和华为相当（192 KB/s）。</p>
+<p><strong>华为云耀</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/Cm178qR9KJ5Qxsh.jpg" alt="hwyy4.jpg" /></p>
+<p><strong>华为ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/U4jawHyN9T2poen.jpg" alt="hwecs4.jpg" /></p>
+<p><strong>阿里ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/c7zWXG5wHkSLJUC.jpg" alt="aliecs4.jpg" /></p>
+<p>总的来说，华为云耀入站略慢于华为ECS，出入都吊打阿里ECS。</p>
+<h2 id="硬盘io性能"><a class="markdownIt-Anchor" href="#硬盘io性能"></a> 硬盘I/O性能</h2>
+<p>使用dd命令进行测试：</p>
+<p><strong>华为云耀</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/FVBvtT5zrUaPObc.jpg" alt="hwyy6.jpg" /></p>
+<p><img src="https://i.loli.net/2020/03/12/Q7jEqKkurbNp283.jpg" alt="hwyy5.jpg" /></p>
+<p><strong>华为ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/923ke6x7gufiMCo.jpg" alt="hwecs6.jpg" /></p>
+<p><img src="https://i.loli.net/2020/03/12/cR34pAFE8UviHwP.jpg" alt="hwecs5.jpg" /></p>
+<p><strong>阿里ECS</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/nOlmZkjWULuAR6f.jpg" alt="aliecs6.jpg" /></p>
+<p><img src="https://i.loli.net/2020/03/12/95Ifbcamy6RtATs.jpg" alt="aliecs5.jpg" /></p>
+<p>在写方面，华为云耀 &gt; 阿里ECS &gt; 华为ECS，华为云耀和阿里ECS差距不大，华为ECS被吊打。<br />
+在物理写方面，阿里ECS &gt; 华为ECS &gt; 华为云耀，不过都是菜鸡互啄，2333。差距不大，实际体验差不多。<br />
+在读方面，华为ECS &gt; 华为云耀 &gt; 阿里ECS，华为ECS比华为云耀高些，阿里ECS完全被吊打。</p>
+<p>总体来说，华为云耀 &gt; 华为ECS &gt; 阿里ECS。</p>
+<h2 id="unixbench"><a class="markdownIt-Anchor" href="#unixbench"></a> UnixBench</h2>
+<p>使用UB跑个分，测试整体性能。</p>
+<p><strong>华为云耀</strong>：</p>
+<p><img src="https://i.loli.net/2020/03/12/OgPw9YmqDp5jMSb.jpg" alt="hwyy7.jpg" /></p>
+<p><strong>华为ECS</strong>:</p>
+<p><img src="https://i.loli.net/2020/03/12/2LRCEgfMrD8SFWx.jpg" alt="hwecs7.jpg" /></p>
+<p>由于阿里ECS是2c，所以换成了1c2g的<strong>阿里轻量应用服务器</strong>：（u是一样的）</p>
+<p><img src="https://i.loli.net/2020/03/12/yDgrzhi7Q26T8JS.jpg" alt="ali2.jpg" /></p>
+<p>华为云耀得分 <strong>1758.6</strong> 要比华为ECS高约 29%，阿里轻量应用 <strong>418.3</strong> ，这是被按在地上摩擦。。呃。。我也没想到会这么差。</p>
+<h2 id="lemonbench"><a class="markdownIt-Anchor" href="#lemonbench"></a> LemonBench</h2>
+<p>在跑个LB：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">服务器 \ 项目</th>
+<th style="text-align:center">单核分数</th>
+<th style="text-align:center">内存性能</th>
+<th style="text-align:center">硬盘性能 100MB-4k</th>
+<th style="text-align:center">硬盘性能 1GB-1M</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">华为云耀</td>
+<td style="text-align:center">1111</td>
+<td style="text-align:center">Read 20.9GB/s, Write 14.9GB/s</td>
+<td style="text-align:center">Read 9.4MB/s, Write 6.1MB/s</td>
+<td style="text-align:center">Read 172MB/s, Write 156MB/s</td>
+</tr>
+<tr>
+<td style="text-align:center">华为ECS</td>
+<td style="text-align:center">888</td>
+<td style="text-align:center">Read 17.6GB/s, Write 12.4GB/s</td>
+<td style="text-align:center">Read 8.6MB/s, Write 4.1MB/s</td>
+<td style="text-align:center">Read 177MB/s, Write 85.7MB/s</td>
+</tr>
+<tr>
+<td style="text-align:center">阿里轻量应用</td>
+<td style="text-align:center">813</td>
+<td style="text-align:center">Read 16.2GB/s, Write 10.9GB/s</td>
+<td style="text-align:center">Read 5.9MB/s, Write 5.7MB/s</td>
+<td style="text-align:center">Read 143MB/s, Write 136MB/s</td>
+</tr>
+<tr>
+<td style="text-align:center">阿里ECS</td>
+<td style="text-align:center">872</td>
+<td style="text-align:center">Read 17.0GB/s, Write 10.5GB/s</td>
+<td style="text-align:center">Read 7.9MB/s, Write 6.7MB/s</td>
+<td style="text-align:center">Read 106MB/s, Write 106MB/s</td>
+</tr>
+</tbody>
+</table>
+<p>华为云耀单核性能，远超另外三个，读写情况和前面测试情况相似。</p>
+<h2 id="总结"><a class="markdownIt-Anchor" href="#总结"></a> 总结</h2>
+<p>综上，同等配置下，华为云耀的整体性能和体验，是比华为弹性云服务器好的，性能上吊打阿里的。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Cloud/">#Cloud</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>白嫖和低价ECS的评测</div>
+      <div>https://yyhua.me/2020/031208.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yangyang Hua</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>March 12, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/032302.html" title="LaTeX数学笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">LaTeX数学笔记</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/022609.html" title="面向纯小白开箱即用的VSCode">
+                        <span class="hidden-mobile">面向纯小白开箱即用的VSCode</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appKey":"DDj9SsVhgv1klkLchSYzqD3m","path":"window.location.pathname","placeholder":"说点什么","avatar":"mp","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"appid":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appkey":"DDj9SsVhgv1klkLchSYzqD3m"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

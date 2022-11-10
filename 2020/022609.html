@@ -1,0 +1,841 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <link rel="icon" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yangyang Hua">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="面向纯小白开箱即用的 VSCode  写在最前面的 最近挺多学习c&#x2F;cpp的学弟（可能有学妹.QAQ.）在群里询问CodeBlocks和编译器的安装，大伙都是推荐VSCode，但还是并没有多少人去尝试。想起我大一的时候，VSCode才出来不久，一个纯小白，在网上查资料自己配置c&#x2F;cpp，还是有一点难度和懵逼的。 现在网上的教程，几乎都是教你如何配置，对于有点基础的还是很友好的，纯小白（或者有点懒">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面向纯小白开箱即用的VSCode">
+<meta property="og:url" content="https://yyhua.me/2020/022609.html">
+<meta property="og:site_name" content="Binning&#39;s Blog">
+<meta property="og:description" content="面向纯小白开箱即用的 VSCode  写在最前面的 最近挺多学习c&#x2F;cpp的学弟（可能有学妹.QAQ.）在群里询问CodeBlocks和编译器的安装，大伙都是推荐VSCode，但还是并没有多少人去尝试。想起我大一的时候，VSCode才出来不久，一个纯小白，在网上查资料自己配置c&#x2F;cpp，还是有一点难度和懵逼的。 现在网上的教程，几乎都是教你如何配置，对于有点基础的还是很友好的，纯小白（或者有点懒">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/vscode-1.42.jpg">
+<meta property="article:published_time" content="2020-02-26T09:00:03.000Z">
+<meta property="article:modified_time" content="2022-11-10T16:17:16.858Z">
+<meta property="article:author" content="Yangyang Hua">
+<meta property="article:tag" content="Code">
+<meta property="article:tag" content="Guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/vscode-1.42.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>面向纯小白开箱即用的VSCode ~ Binning&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yyhua.me","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"~","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":5},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Binning&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://yyhua.cn-sh2.ufileos.com/fluid/post/vscode.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="面向纯小白开箱即用的VSCode"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-02-26 17:00" pubdate>
+          Wednesday, February 26th 2020, 5:00 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          3.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          30 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">面向纯小白开箱即用的VSCode</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    <!-- compatible with older versions-->
+                    本文最后更新于：November 11, 2022 am
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="面向纯小白开箱即用的-vscode"><a class="markdownIt-Anchor" href="#面向纯小白开箱即用的-vscode"></a> 面向纯小白开箱即用的 VSCode</h1>
+<h2 id="写在最前面的"><a class="markdownIt-Anchor" href="#写在最前面的"></a> 写在最前面的</h2>
+<p>最近挺多学习c/cpp的学弟（可能有学妹.QAQ.）在群里询问CodeBlocks和编译器的安装，大伙都是推荐VSCode，但还是并没有多少人去尝试。想起我大一的时候，VSCode才出来不久，一个纯小白，在网上查资料自己配置c/cpp，还是有一点难度和懵逼的。</p>
+<p>现在网上的教程，几乎都是教你如何配置，对于有点基础的还是很友好的，纯小白（或者有点懒的people），还是不容易接受。正好我的VSCode一直没有配置c/cpp，于是就有了这个教程，说是教程也谈不上，几乎都是点击鼠标的操作，严格来说算是安装指南。即这是面对没有编程基础的，实现简单的编译和调试，对于c/cpp课程还是足够了。</p>
+<p>BTW 有人觉得教程太长懒得读，直接文末下载压缩包，解压后参考Readme.txt，安装步骤即可。</p>
+<h2 id="那就开始啦"><a class="markdownIt-Anchor" href="#那就开始啦"></a> 那就开始啦</h2>
+<p><strong>环境：</strong> Win10 Enterprise 19041.1165<br />
+<strong>编辑器：</strong> VSCode 1.59.1<br />
+<strong>编译器：</strong> mingw-w64-x86_64-8.1.0-release-win32-seh-rt_v6-rev0</p>
+<p>考虑到简易性，编译和调试均采用mingw-w64，对于课程学习是足够的，需要性能和效率，可自行学习配置clang编译。</p>
+<h2 id="安装与配置-mingw-w64"><a class="markdownIt-Anchor" href="#安装与配置-mingw-w64"></a> 安装与配置 mingw-w64</h2>
+<p>请将 <strong>文末</strong> 提供的压缩包 <strong>解压</strong> 出来 (mingw-w64已打包在内) <strong>! ! !</strong></p>
+<p><strong>双击 install.bat 运行</strong><br />
+会弹出 UAC 请求窗口，<strong>允许</strong> 即可；运行无误，将会显示：（根据系统语言，也会是中文）<br />
+<img src="https://i.loli.net/2020/02/26/io916PAHDGTn8cR.jpg" alt="" /></p>
+<p>正常情况，mingw-w64已安装和配置好，不放心可以 <strong>win+r</strong> 键，输入 <strong>cmd</strong>，<br />
+运行 <code>gcc -v</code> 命令，将会显示：（非必须操作）<br />
+<img src="https://i.loli.net/2020/03/26/VymhjGLbZlcX2v3.jpg" alt="" /></p>
+<h2 id="安装-vscode"><a class="markdownIt-Anchor" href="#安装-vscode"></a> 安装 VSCode</h2>
+<p>双击 <strong>VSCodeSetup-x64-1.59.1</strong>，开始安装</p>
+<ul>
+<li>
+<ol>
+<li>同意协议<br />
+<img src="https://i.loli.net/2020/02/26/rySI8q19tuobKRC.jpg" alt="" /></li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>设置安装路径（ <strong>建议是默认路径！！！</strong>，C:\任意纯英文路径也可，其他磁盘分区路径未测试）<br />
+<img src="https://i.loli.net/2020/02/26/S2FwojMEPkp6ViO.jpg" alt="" /><img src="https://i.loli.net/2020/02/26/TCkYUx6Mu2c3sWb.jpg" alt="" /></li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>附加选项，勾选 <strong>Other</strong> 中四项<br />
+<img src="https://i.loli.net/2020/02/26/gWAV2fOL4DZPydN.jpg" alt="" /></li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>完成，VSCode被打开<br />
+<img src="https://i.loli.net/2020/02/26/HmIP9fd3uKNoeXk.jpg" alt="" /></li>
+</ol>
+</li>
+</ul>
+<h2 id="安装与配置-vscode-插件"><a class="markdownIt-Anchor" href="#安装与配置-vscode-插件"></a> 安装与配置 VSCode 插件</h2>
+<p>VSCode只是一个编辑器，要想进行编程，除了配置编译器外，还需要依靠插件；同时VSCode拥有丰富的插件，美化类插件，开发类插件等，有兴趣可以去了解下。</p>
+<p>在点击左侧插件图标，即可在搜索框中，查找对应插件，点击“Install”，即可安装。<br />
+这里我们需要安装3个插件：</p>
+<ul>
+<li>
+<ol>
+<li><strong>C/C++</strong>，来自Microsoft官方<br />
+<img src="https://i.loli.net/2020/02/26/HgDj5RuSI87olBQ.jpg" alt="" /><br />
+点击安装后会提示正在下载和安装，完成后消息会自动消失<br />
+<img src="https://i.loli.net/2020/02/26/ULWXzY42PhQtw6S.jpg" alt="" /></li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li><strong>Code Runner</strong>，来自开发者Jun Han<br />
+<img src="https://i.loli.net/2020/02/26/v725VxcRXJ4YQdo.jpg" alt="" /></li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li><strong>Chinese (Simplified) Language Pack for Visual Studio Code</strong> 语言包，来自Microsoft官方<br />
+<img src="https://i.loli.net/2020/02/26/U8SMry1IFimHEgK.jpg" alt="" />点击安装语言包后，会提示重新加载，“Yes” 后，VSCoode会重新加载，界面将会切换为简体中文 <img src="https://i.loli.net/2020/02/26/d84fs7Q5JcHSBKn.jpg" alt="" /></li>
+</ol>
+</li>
+</ul>
+<p>接下来使用bat文件配置VSCode设置<br />
+<strong>关闭VSCode</strong>，然后<strong>双击 settings.bat 运行</strong><br />
+运行无误，将会显示：（根据系统语言，也会是中文）<img src="https://i.loli.net/2020/02/26/nRyEo3TlupcJZs9.jpg" alt="" /></p>
+<h2 id="build-debug"><a class="markdownIt-Anchor" href="#build-debug"></a> Build &amp; Debug</h2>
+<p>现在依靠Code Runner插件，用VSCode是可以编译运行c/cpp单文件的（文件所在文件夹目录不能存在中文），输出结果会显示在VSCode下方内置终端中，<strong>但还不能进行调试</strong>。与CodeBlocks一样，需要将c/cpp文件所在文件夹，添加到左侧工作区。不同的是，CodeBlocks会自动添加，且无需额外配置文件；VSCode需要手动添加文件夹到工作区，且需要配置文件，才可以进行调试。如果是自己进行配置，能体会到整个.c文件到.exe文件的编译流程，这里个人觉得VSCode更为直观（其实CB设置里也有，不过颜值在这…QAQ）。</p>
+<h3 id="创建并配置工作区文件夹"><a class="markdownIt-Anchor" href="#创建并配置工作区文件夹"></a> 创建并配置工作区文件夹</h3>
+<p>在解压得到的文件夹demo内，已经分别准备好了c/cpp的调试文件。<img src="https://i.loli.net/2020/02/26/4U6BrhtN1w8m2jP.jpg" alt="" /><br />
+此时需要你在任一英文路径下新建未来存放.c/.cpp文件的文件夹。例如在C:\下创建Code，（若用户名不为中文，可在桌面创建存放文件夹），然后将对应demo\c或demo\cpp内 <strong>.vscode</strong> 文件夹复制到Code文件夹内，<img src="https://i.loli.net/2020/02/26/nZGUclSqXbTp1k7.jpg" alt="" /> 并右键Code文件夹-用Code打开，将存放（项目）文件夹添加到VSCode的工作区，现在Code文件夹中的c/cpp文件就可以进行编译调试了。<img src="https://i.loli.net/2020/02/26/DaGyBvAJEjtq3sN.jpg" alt="" /><img src="https://i.loli.net/2020/02/26/EzXBCoP1eN8vxbc.jpg" alt="" /></p>
+<h3 id="测试"><a class="markdownIt-Anchor" href="#测试"></a> 测试</h3>
+<p>下面以.c为例，创建测试文件（demo/c和demo/cpp中准备有.c和.cpp用于测试，将其复制到工作区文件夹即可）进行测试：<img src="https://i.loli.net/2020/02/26/B4kSMQlOvGHJdmg.jpg" alt="" /></p>
+<h4 id="编译运行"><a class="markdownIt-Anchor" href="#编译运行"></a> 编译运行</h4>
+<p>在.c文件中右键，可对代码进行格式化，点击 <strong>Run Code</strong> 直接编译运行代码，输出结果会在下方<strong>输出</strong>中显示:（也可在Code Runner扩展设置中修改，用外部cmd弹窗显示）<img src="https://i.loli.net/2020/02/26/r3yNFmPeHZIfJak.jpg" alt="" /><span id="jump1"></p>
+<h4 id="编译调试"><a class="markdownIt-Anchor" href="#编译调试"></a> 编译调试</h4>
+<p>先设置在代码中设置 <strong>断点</strong> <img src="https://i.loli.net/2020/02/26/jlhAvap4Nn9HkSq.jpg" alt="" />点击任务栏中<strong>调试</strong>或按<strong>F5</strong>键，均可启动调试 <img src="https://i.loli.net/2020/02/26/Uk4HMQ7lmRGEoJP.jpg" alt="" />左侧为调试信息显示，有变量，堆栈，断点等信息，上方为控制栏，可进行<strong>继续</strong>，<strong>跳过</strong>，<strong>停止</strong>等操作（均有快捷按键）。<img src="https://i.loli.net/2020/02/26/PHiSsAfxM1q9mdl.jpg" alt="" /><span id="jump2"></p>
+<h3 id="交互式文件的输入"><a class="markdownIt-Anchor" href="#交互式文件的输入"></a> 交互式文件的输入</h3>
+<p>交互式文件的输出与输入，默认设置为调用 VSCode 内置终端（可在设置中更改为外部cmd窗口），位于下方（当然，也可以设置为其他位置）</p>
+<h4 id="编译运行-2"><a class="markdownIt-Anchor" href="#编译运行-2"></a> 编译运行：</h4>
+<p>输入输出均在 <strong>终端</strong> 中进行，而无输入的文件，其运行结果在 <strong>输出</strong> 中显示（见上节 <a href="#jump1">测试</a>）<img src="https://i.loli.net/2020/02/27/YEzdJOXsNM6gb4K.jpg" alt="" /></p>
+<h4 id="编译调试-2"><a class="markdownIt-Anchor" href="#编译调试-2"></a> 编译调试：</h4>
+<p>与编译运行相同，依然在 <strong>终端</strong> 进行输入，断点，变量等信息仍然在左侧，调试信息显示在 <strong>终端</strong> 左侧的 <strong>调试控制台</strong>（见上节 <a href="#jump2">测试</a>）<img src="https://i.loli.net/2020/02/27/icXthIbOMj8TBkP.jpg" alt="" /></p>
+<h3 id="warning"><a class="markdownIt-Anchor" href="#warning"></a> Warning</h3>
+<ul>
+<li>
+<ol>
+<li>代码文件所在文件夹一定要包含 <strong>.vscode</strong> 与其中的配置文件</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>代码文件所在文件夹一定是纯英文路径，不包含中文和任何特殊字符（如 “ ”空格）</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>代码文件所在文件夹一定要添加到VSCode工作区内，可以右键 <strong>用Code打开</strong> 添加，也可在VSCode工作区右键添加</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>（建议小白）严格遵守1 - 3，是可以正常进行编译调试的，避免出现奇怪错误。</li>
+</ol>
+</li>
+</ul>
+<h2 id="some-scripts"><a class="markdownIt-Anchor" href="#some-scripts"></a> Some Scripts</h2>
+<p>这部分没兴趣可以直接跳过。<br />
+安装mingw-w64与添加系统环境变量命令的 <strong>install.bat</strong>：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs awk">@echo off<br><span class="hljs-regexp">//</span>检查路径是否冲突<br><span class="hljs-keyword">if</span> exist <span class="hljs-string">&quot;C:\Program Files\mingw64&quot;</span> echo Please remove the folder <span class="hljs-keyword">in</span> this path <span class="hljs-string">&quot;C:\Program Files\mingw64&quot;</span> and try again... &amp;&amp; pause &amp;&amp; <span class="hljs-keyword">exit</span><br><br><span class="hljs-regexp">//</span>调用管理员权限<br>%<span class="hljs-number">1</span> mshta vbscript:CreateObject(<span class="hljs-string">&quot;Shell.Application&quot;</span>).ShellExecute(<span class="hljs-string">&quot;cmd.exe&quot;</span>,<span class="hljs-string">&quot;/c %~s0 ::&quot;</span>,<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;runas&quot;</span>,<span class="hljs-number">1</span>)(window.close)&amp;&amp;<span class="hljs-keyword">exit</span><br>cd /d <span class="hljs-string">&quot;%~dp0&quot;</span><br><br><span class="hljs-regexp">//</span>安装mingw-w64<br>mkdir <span class="hljs-string">&quot;C:\Program Files\mingw64&quot;</span><br>xcopy mingw64 <span class="hljs-string">&quot;C:\Program Files\mingw64&quot;</span> /e<br><br><span class="hljs-regexp">//</span>添加系统环境变量<br>setx PATH <span class="hljs-string">&quot;%PATH%;C:\Program Files\mingw64\bin&quot;</span> /m<br><br>echo Do <span class="hljs-keyword">next</span> step!<br><br>pause<br></code></pre></td></tr></table></figure>
+<p>配置VSCode设置的 <strong>settings.bat</strong>:</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs dos">@<span class="hljs-built_in">echo</span> off<br><span class="hljs-built_in">cd</span> demo<br><span class="hljs-built_in">copy</span> settings.json <span class="hljs-variable">%APPDATA%</span>\Code\User<br><br><span class="hljs-built_in">pause</span><br></code></pre></td></tr></table></figure>
+<h2 id="happy-coding"><a class="markdownIt-Anchor" href="#happy-coding"></a> Happy Coding</h2>
+<p><img src="https://yyhua.cn-sh2.ufileos.com/fluid/post/happy-coding1.jpg" alt="" /> <img src="https://yyhua.cn-sh2.ufileos.com/fluid/post/happy-coding2.png" alt="" /></p>
+<h2 id="download"><a class="markdownIt-Anchor" href="#download"></a> Download</h2>
+<p>压缩包内Readme.txt，为简略安装步骤，可忽略，参考本教程即可。<br />
+若链接失效，工大同学可通过主页加入<a target="_blank" rel="noopener" href="https://www.hitdn110.club/">电脑110义诊群</a>，从群文件中下载安装包。<br />
+<strong>&gt;_&gt; <a target="_blank" rel="noopener" href="https://hiteducn0-my.sharepoint.com/:u:/g/personal/yyhua_hit_edu_cn/EeF_FS92YUVGr0H3k1rKm7sBidmpIi8VUaJvpgKdGe9Iiw">点此下载</a> &lt;_&lt;</strong><br />
+<strong>&gt;_&gt; <a target="_blank" rel="noopener" href="https://yyhua.cn-sh2.ufileos.com/VSCode-1.59.1.7z">备用下载</a> &lt;_&lt;</strong></p>
+<h2 id="the-end"><a class="markdownIt-Anchor" href="#the-end"></a> The End</h2>
+<p>以上是教程（指南）的所有内容啦，VSCode只是一个编辑器，不同编辑器的组合，你可以写很多语言Python, R, Go, PHP等，还有Markdown, LaTeX等文本，强烈推荐去了解学习。</p>
+<p>最后谈一下，关于考试使用CodeBlocks的担忧，IDE的操作逻辑和界面基本大同小异，课程会有上机实验，和考试是完全一样的，足够去熟悉CodeBlocks啦，所有不用担心。以及老师推荐用Codeblocks的问题，简言之CB集成mingw作为IDE所有都是配置好的，上手就用，这样更方便，老师教学也更容易；其实有能力老师也鼓励你去使用类似VSCode等轻量级编辑器（<s>高颜值</s>）、Xcode等IDE的。</p>
+<p>如果有问题可下评论区留言，或查看 <strong>About</strong> 联系方式反馈.<br />
+本校同学可通过主页加入<a target="_blank" rel="noopener" href="https://www.hitdn110.club/">哈工大电脑110俱乐部义诊群</a>询问和反馈。</p>
+<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/35178331">VS Code 搭建 C/C++ 编译运行环境的四种方案</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/84258079">在windows系统中搭建基于VSCode的C开发环境</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Code/">#Code</a>
+      
+        <a href="/tags/Guide/">#Guide</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>面向纯小白开箱即用的VSCode</div>
+      <div>https://yyhua.me/2020/022609.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yangyang Hua</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>February 26, 2020</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/031208.html" title="白嫖和低价ECS的评测">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">白嫖和低价ECS的评测</span>
+                        <span class="visible-mobile">Previous</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/082407.html" title="校园网使用指南">
+                        <span class="hidden-mobile">校园网使用指南</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appKey":"DDj9SsVhgv1klkLchSYzqD3m","path":"window.location.pathname","placeholder":"说点什么","avatar":"mp","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"appid":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appkey":"DDj9SsVhgv1klkLchSYzqD3m"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>

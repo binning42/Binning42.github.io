@@ -1,0 +1,742 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <link rel="icon" href="https://yyhua.cn-sh2.ufileos.com/fluid/favicon.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="Yangyang Hua">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="使用Code Server容器部署VS Code Online  前言 考虑到在服务器上直接部署Code Server将端口暴露，非常的不安全。这时候使用Docker将Code Server在容器中运行，相对来说会更加安全。但是在实际配置运行过程中会有各种的问题，如容器权限管理，SSL证书&#x2F;HTTPS，Code Server更新等。根据实际过程的踩坑，将教程整理为本文。  开始之前 首先要准备一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用Code Server容器部署VS Code Online">
+<meta property="og:url" content="https://yyhua.me/2021/082307.html">
+<meta property="og:site_name" content="Binning&#39;s Blog">
+<meta property="og:description" content="使用Code Server容器部署VS Code Online  前言 考虑到在服务器上直接部署Code Server将端口暴露，非常的不安全。这时候使用Docker将Code Server在容器中运行，相对来说会更加安全。但是在实际配置运行过程中会有各种的问题，如容器权限管理，SSL证书&#x2F;HTTPS，Code Server更新等。根据实际过程的踩坑，将教程整理为本文。  开始之前 首先要准备一">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/code-online.jpg">
+<meta property="article:published_time" content="2021-08-23T07:58:50.000Z">
+<meta property="article:modified_time" content="2022-11-10T16:03:24.250Z">
+<meta property="article:author" content="Yangyang Hua">
+<meta property="article:tag" content="Cloud">
+<meta property="article:tag" content="Code">
+<meta property="article:tag" content="Container">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://yyhua.cn-sh2.ufileos.com/fluid/post/code-online.jpg">
+  
+  
+    <meta name="referrer" content="no-referrer-when-downgrade">
+  
+  
+  <title>使用Code Server容器部署VS Code Online ~ Binning&#39;s Blog</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"yyhua.me","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":70,"cursorChar":"~","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":5},"lazyload":{"enable":false,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Binning&#39;s Blog</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                Links
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('https://yyhua.cn-sh2.ufileos.com/fluid/post/code-server.jpg') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="使用Code Server容器部署VS Code Online"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-08-23 15:58" pubdate>
+          Monday, August 23rd 2021, 3:58 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          <!-- compatible with older versions-->
+          3.5k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          <!-- compatible with older versions-->
+          29 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">使用Code Server容器部署VS Code Online</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    <!-- compatible with older versions-->
+                    本文最后更新于：November 11, 2022 am
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="使用code-server容器部署vs-code-online"><a class="markdownIt-Anchor" href="#使用code-server容器部署vs-code-online"></a> 使用Code Server容器部署VS Code Online</h1>
+<h2 id="前言"><a class="markdownIt-Anchor" href="#前言"></a> 前言</h2>
+<p>考虑到在服务器上直接部署Code Server将端口暴露，非常的不安全。这时候使用Docker将Code Server在容器中运行，相对来说会更加安全。但是在实际配置运行过程中会有各种的问题，如容器权限管理，SSL证书/HTTPS，Code Server更新等。根据实际过程的踩坑，将教程整理为本文。</p>
+<h2 id="开始之前"><a class="markdownIt-Anchor" href="#开始之前"></a> 开始之前</h2>
+<p>首先要准备一台服务器，Code Server文档的最低推荐配置是1GB of RAM，2 CPU Cores。<br />
+我选用的是腾讯云的轻量云服务器配置为2c4g8m，CentOS 7。</p>
+<h2 id="docker-engine"><a class="markdownIt-Anchor" href="#docker-engine"></a> Docker Engine</h2>
+<p>要在服务器运行Docker需要安装Docker Engine，建议通过Docker Docs给出的说明进行安装，非常不建议直接apt/yum安装仓库中的包（特别是CentOS这种以<s>老旧</s>稳定著称的发行版）。在<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/">文档</a>中选取对应系统，参照文档进行安装即可。<br />
+非root用户下运行docker请参考<a target="_blank" rel="noopener" href="https://docs.docker.com/engine/install/linux-postinstall/">此文档</a></p>
+<h2 id="code-server"><a class="markdownIt-Anchor" href="#code-server"></a> Code Server</h2>
+<p>有关Code Server的介绍可以参考其<a target="_blank" rel="noopener" href="https://coder.com/">官网</a>。从dockerhub中直接拉取最新的<a target="_blank" rel="noopener" href="https://hub.docker.com/r/codercom/code-server">Code Server镜像</a>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker pull codercom/code-server:latest<br></code></pre></td></tr></table></figure>
+<p>Code Server镜像是基于Debian buster构建，非常干净，需要自己安装所需的软件包。由于我不止部署了一个Code Server（多人使用），考虑到不同的Code Server中版本升级和文件传输备份问题，所以我选择在服务器（宿主机）上每个Code Server容器创建对应的home文件夹，并挂载到容器/home/coder/（Code Server默认的home路径）。同时使用dockerfile来构建我所需的Code Server镜像（A在学习C，B只用Python）。</p>
+<h3 id="dockerfile"><a class="markdownIt-Anchor" href="#dockerfile"></a> Dockerfile</h3>
+<p>我需要分别构建C和Python的两个镜像（当然也可以一个里全装，就是镜像体积会很大）。</p>
+<h4 id="dockerfile-for-python"><a class="markdownIt-Anchor" href="#dockerfile-for-python"></a> Dockerfile for Python</h4>
+<p>多行写入其实可以用cat，但是在dockerfile中似乎语法不支持，只能用echo一行行写了。<br />
+当然apt在dockerfile的编译环境也是会报错的，要用apt-get。具体区别的话可以Google一下。</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> codercom/code-server<br><span class="hljs-keyword">RUN</span><span class="bash"> sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; sudo mv /home/coder/sources.list /etc/apt/ \</span><br><span class="bash">    &amp;&amp; sudo apt-get update &amp;&amp; sudo apt-get upgrade -y &amp;&amp; sudo apt-get install -y fonts-powerline python3 python3-pip vim \</span><br><span class="bash">    &amp;&amp; sudo apt-get clean</span><br></code></pre></td></tr></table></figure>
+<h4 id="docker-for-ccpp"><a class="markdownIt-Anchor" href="#docker-for-ccpp"></a> Docker for C/Cpp</h4>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> codercom/code-server<br><span class="hljs-keyword">RUN</span><span class="bash"> sudo mv /etc/apt/sources.list /etc/apt/sources.list.bak \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&#x27;deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free&#x27;</span> &gt;&gt; /home/coder/sources.list \</span><br><span class="bash">    &amp;&amp; sudo mv /home/coder/sources.list /etc/apt/ \</span><br><span class="bash">    &amp;&amp; sudo apt-get update &amp;&amp; sudo apt-get upgrade -y &amp;&amp; sudo apt-get install -y fonts-powerline build-essential gdb vim \</span><br><span class="bash">    &amp;&amp; sudo apt-get clean </span><br></code></pre></td></tr></table></figure>
+<h4 id="构建镜像"><a class="markdownIt-Anchor" href="#构建镜像"></a> 构建镜像</h4>
+<p>参考docker build命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker build -t 构建的镜像名字 -f dockerfile文件名 --no-cache . <br></code></pre></td></tr></table></figure>
+<p>最后是有一点. 的指当前路径。</p>
+<h2 id="运行code-server"><a class="markdownIt-Anchor" href="#运行code-server"></a> 运行Code Server</h2>
+<p>Code Server是支持ssl证书的，参考其<a target="_blank" rel="noopener" href="https://coder.com/docs/code-server/v3.11.1#tls-and-authentication-beta">文档</a>。因为我使用Code Server容器的话，所以直接在Docker运行配置中添加对应参数即可。运行命令如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">docker run -dit --cap-add SYS_PTRACE --name 命名运行的容器 -p 0.0.0.0:8100:8080 \<br>  -v /宿主机中的创建的home文件夹路径:/home/coder \<br>  -v /宿主机中证书路径/cert.pem:/容器中证书路径/cert.pem \<br>  -v /宿主机中公钥路径/key.pem:/容器中公钥路径/key.pem \<br>  -u <span class="hljs-string">&quot;<span class="hljs-subst">$(id -u)</span>:<span class="hljs-subst">$(id -g)</span>&quot;</span> \<br>  -e PASSWORD=设置的登录密码 \<br>  构建的镜像名字 --cert /容器中证书路径/cert.pem --cert-key /容器中公钥路径/key.pem<br></code></pre></td></tr></table></figure>
+<ul>
+<li>–cap-add SYS_PTRACE 给容器添加权限（否则gdb会无法运行）</li>
+<li>–name 给运行容器命名（需要符合规范：英文字符1-英文字符2）</li>
+<li>-p 0.0.0.0:8100:8080 8100是服务器（宿主机）上的端口也是实际访问的端口，需要在防火墙中放开，自行修改；8080是Code Server默认的运行端口不需要修改。</li>
+</ul>
+<h2 id="升级code-server"><a class="markdownIt-Anchor" href="#升级code-server"></a> 升级Code Server</h2>
+<p>在容器中直接运行Code Server的升级命令应该是可以的，但是我<s>有洁癖</s>不是很喜欢。使用dockerfile构建镜像，home目录本地挂载使得可以直接删除镜像，重复build镜像和run容器（使用与之前完全相同的命令），就可实现更新Code Server，同时保留所有扩展设置和文件。</p>
+<h2 id="references"><a class="markdownIt-Anchor" href="#references"></a> References</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://coder.com/docs/code-server/v3.11.1">Coder Docs</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cdr/code-server/discussions/2595">Not Serving HTTPS</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/davis12/p/14453690.html">docker容器权限设置</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/Gamish/article/details/81632862?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.control&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-3.control">gdb调试运行中的进程报错</a></li>
+</ul>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Cloud/">#Cloud</a>
+      
+        <a href="/tags/Code/">#Code</a>
+      
+        <a href="/tags/Container/">#Container</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>使用Code Server容器部署VS Code Online</div>
+      <div>https://yyhua.me/2021/082307.html</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Author</div>
+          <div>Yangyang Hua</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Posted on</div>
+          <div>August 23, 2021</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>Licensed under</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021/031100.html" title="Slurm 作业调度系统使用指南">
+                        <span class="hidden-mobile">Slurm 作业调度系统使用指南</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  <article id="comments">
+    
+  <div id="valine"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#valine', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js', function() {
+        var options = Object.assign(
+          {"appId":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appKey":"DDj9SsVhgv1klkLchSYzqD3m","path":"window.location.pathname","placeholder":"说点什么","avatar":"mp","meta":["nick","mail","link"],"requiredFields":[],"pageSize":10,"lang":"zh-CN","highlight":true,"recordIP":true,"serverURLs":"","emojiCDN":null,"emojiMaps":null,"enableQQ":false,"appid":"39LP6gmiG8rmL65Dex32y01D-MdYXbMMI","appkey":"DDj9SsVhgv1klkLchSYzqD3m"},
+          {
+            el: "#valine",
+            path: window.location.pathname
+          }
+        )
+        new Valine(options);
+        Fluid.utils.waitElementVisible('#valine .vcontent', () => {
+          var imgSelector = '#valine .vcontent img:not(.vemoji)';
+          Fluid.plugins.imageCaption(imgSelector);
+          Fluid.plugins.fancyBox(imgSelector);
+        })
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+  </article>
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Table of Contents</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="busuanzi_container_site_pv" style="display: none">
+        总访问量 
+        <span id="busuanzi_value_site_pv"></span>
+         次
+      </span>
+    
+    
+      <span id="busuanzi_container_site_uv" style="display: none">
+        总访客数 
+        <span id="busuanzi_value_site_uv"></span>
+         人
+      </span>
+    
+    
+  
+</div>
+
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+  <script defer src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog works best with JavaScript enabled</div>
+  </noscript>
+</body>
+</html>
